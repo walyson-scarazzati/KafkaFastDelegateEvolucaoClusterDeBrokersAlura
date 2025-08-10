@@ -11,17 +11,19 @@ public class NewOrderMain {
 		// mensagem nesse caso vamos usar string em tudo
 		try (var orderDispatcher = new KafkaDispatcher<Order>()) {
 			try (var emailDispatcher = new KafkaDispatcher<Email>()) {
+				var email = Math.random() + "@email.com"; 
 				for (int i = 0; i < 10; i++) {
-					String userId = UUID.randomUUID().toString();
+
 					String orderId = UUID.randomUUID().toString();
 					var amount = new BigDecimal(Math.random() * 5000 + 1);
-					var order = new Order(userId, orderId, amount);
-					String value = userId + "132123,67523,789289745";
-					orderDispatcher.send("ECOMMERCE_NEW_ORDER", userId, order);
+					
+					var order = new Order( orderId, amount, email);
 
-					var email = new Email("Assunto do email",
+					orderDispatcher.send("ECOMMERCE_NEW_ORDER", email, order);
+
+					var emailCode = new Email("Assunto do email",
 							"Corpo do email: Thank you for your order! We are processing it now.");
-					emailDispatcher.send("ECOMMERCE_SEND_EMAIL", userId, email);
+					emailDispatcher.send("ECOMMERCE_SEND_EMAIL", email, emailCode);
 				}
 			}
 		}
