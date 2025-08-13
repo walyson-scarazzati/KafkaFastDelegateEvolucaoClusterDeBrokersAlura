@@ -1,21 +1,24 @@
 # Ecommerce Kafka Microservices Project
 
-This project is from [alura.com.br](https://www.alura.com.br/)   Kafka: Fast delegate, evolução e cluster de brokers is a set of Java microservices for an ecommerce system, using Apache Kafka for messaging. It is organized as a Maven multi-module project, with each service in its own module.
+This project is a Java-based microservices system for ecommerce, using Apache Kafka for messaging. The project is organized as a Maven multi-module, with each service in its own module.
 
 ## Project Structure
 
 - `ecommerce/` (parent Maven project)
   - `common-kafka/` (shared Kafka utilities)
   - `service-new-order/` (handles new orders)
-  - `service-email/` (handles email notifications)
-  - `service-fraud-detector/` (detects fraud)
-  - `service-log/` (logs events)
+  - `service-email/` (sends email notifications)
+  - `service-fraud-detector/` (fraud detection)
+  - `service-log/` (event logging)
+  - `service-http-ecommerce/` (HTTP API for ecommerce integration)
+  - `service-users/` (user management and local database)
+  
 
 ## Prerequisites
 
 - Java 21
 - Maven
-- [Apache Kafka](https://kafka.apache.org/downloads) (Scala 2.13 version recommended)
+- [Apache Kafka](https://kafka.apache.org/downloads) (recommended: Scala 2.13 version)
 
 ## Running Kafka (Windows)
 
@@ -25,7 +28,7 @@ This project is from [alura.com.br](https://www.alura.com.br/)   Kafka: Fast del
    - Extract the archive
 
 2. **Start Zookeeper**
-   - Open Git Bash (not CMD or PowerShell)
+   - Open Git Bash (do not use CMD or PowerShell)
    - Navigate to the Kafka folder
    - Run:
      ```sh
@@ -33,12 +36,12 @@ This project is from [alura.com.br](https://www.alura.com.br/)   Kafka: Fast del
      ```
 
 3. **Start Kafka Broker**
-   - In another Git Bash window, run:
+   - In another Git Bash terminal, run:
      ```sh
      bin/kafka-server-start.sh config/server.properties
      ```
 
-> **Note:** On Windows, use Git Bash. CMD and PowerShell may not work with the provided shell scripts.
+> **Note:** On Windows, always use Git Bash to run `.sh` scripts.
 
 ## Building the Project
 
@@ -50,14 +53,33 @@ mvn clean install
 
 ## Running the Services
 
-Each service can be run from its own directory using:
+Each service can be run individually. Enter the desired service folder and run:
 
 ```sh
 mvn exec:java
 ```
 
-Or by running the generated JAR files in the `target/` directories.
+Or run the generated JAR in `target/`:
+
+```sh
+java -jar target/<jar-name>.jar
+```
+
+### Available Services
+
+- **service-new-order**: receives and publishes new orders to Kafka
+- **service-email**: consumes events and sends emails
+- **service-fraud-detector**: detects possible fraud in orders
+- **service-log**: logs events
+- **service-http-ecommerce**: exposes HTTP endpoints for external integration
+- **service-users**: manages users and local persistence (e.g., `users_database.db`)
+
+## Notes
+
+- All services require Kafka to be running.
+- The `common-kafka` module contains shared utilities for all services.
+- The `service-users` module uses a local database file (`.db` in `target/`).
 
 ## License
 
-This project is for educational purposes.
+Educational project based on the [Alura course](https://www.alura.com.br/).
