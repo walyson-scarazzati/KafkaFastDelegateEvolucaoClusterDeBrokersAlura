@@ -1,6 +1,6 @@
 # Ecommerce Kafka Microservices Project
 
-This project is a Java-based microservices system for ecommerce, using Apache Kafka for messaging. The project is organized as a Maven multi-module, with each service in its own module.
+This project is a Java-based microservices system for ecommerce alura.com.br course "Kafka: Fast delegate, evolução e cluster de brokers" using Apache Kafka for messaging. The project is organized as a Maven multi-module, with each service in its own module.
 
 ## Project Structure
 
